@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thực hành CSS – Table, List, Link</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ===== LAYOUT ===== */
+    header {
+      background: linear-gradient(135deg, #1a237e, #42a5f5);
+      color: #fff;
+      text-align: center;
+      padding: 36px 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      background: #1a237e;
+      padding: 12px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 20px;
+      transition: background 0.25s;
+    }
+
+    nav a:hover {
+      background: #42a5f5;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 32px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    section h2 {
+      font-size: 1.4rem;
+      color: #1a237e;
+      border-left: 5px solid #42a5f5;
+      padding-left: 12px;
+      margin-bottom: 20px;
+    }
+
+    section h3 {
+      font-size: 1rem;
+      color: #555;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .demo-box {
+      background: #f8f9ff;
+      border: 1px dashed #c5cae9;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    /* ========================================================
+       PHẦN 1 – CSS TABLE
+    ======================================================== */
+
+    /* Bảng cơ bản */
+    .table-basic {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .table-basic th,
+    .table-basic td {
+      border: 1px solid #ccc;
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .table-basic th {
+      background: #e8eaf6;
+      color: #1a237e;
+      font-weight: 700;
+    }
+
+    /* Bảng sọc (zebra stripe) */
+    .table-zebra {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .table-zebra th {
+      background: #1a237e;
+      color: #fff;
+      padding: 10px 14px;
+    }
+
+    .table-zebra td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .table-zebra tbody tr:nth-child(even) {
+      background: #e8eaf6;
+    }
+
+    .table-zebra tbody tr:hover {
+      background: #bbdefb;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    /* Bảng không có border ngoài, chỉ border ngang */
+    .table-clean {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    .table-clean th {
+      border-bottom: 2px solid #42a5f5;
+      padding: 10px 14px;
+      text-align: left;
+      color: #42a5f5;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.8px;
+    }
+
+    .table-clean td {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 10px 14px;
+    }
+
+    .table-clean tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Badge trạng thái trong bảng */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .badge-pass  { background: #c8e6c9; color: #2e7d32; }
+    .badge-fail  { background: #ffcdd2; color: #c62828; }
+    .badge-pend  { background: #fff9c4; color: #f57f17; }
+
+    /* ========================================================
+       PHẦN 2 – CSS LIST
+    ======================================================== */
+
+    /* Danh sách không thứ tự – custom bullet */
+    .list-disc   { list-style-type: disc;   padding-left: 22px; }
+    .list-circle { list-style-type: circle; padding-left: 22px; }
+    .list-square { list-style-type: square; padding-left: 22px; }
+    .list-none   { list-style-type: none;   padding-left: 0; }
+
+    .list-disc li,
+    .list-circle li,
+    .list-square li,
+    .list-none li {
+      padding: 4px 0;
+    }
+
+    /* Danh sách có thứ tự */
+    .list-decimal    { list-style-type: decimal;     padding-left: 22px; }
+    .list-lower-alpha{ list-style-type: lower-alpha; padding-left: 22px; }
+    .list-upper-roman{ list-style-type: upper-roman; padding-left: 30px; }
+
+    .list-decimal li,
+    .list-lower-alpha li,
+    .list-upper-roman li {
+      padding: 4px 0;
+    }
+
+    /* Danh sách custom dùng ::before */
+    .list-custom {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .list-custom li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+    }
+
+    .list-custom li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #43a047;
+      font-size: 0.9rem;
+    }
+
+    /* Danh sách menu ngang */
+    .list-inline {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .list-inline li a {
+      display: block;
+      padding: 6px 16px;
+      background: #e8eaf6;
+      border-radius: 4px;
+      color: #1a237e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .list-inline li a:hover {
+      background: #1a237e;
+      color: #fff;
+    }
+
+    /* Danh sách có image bullet */
+    .list-image {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .list-image li {
+      padding: 5px 0 5px 32px;
+      position: relative;
+    }
+
+    .list-image li::before {
+      content: "🌟";
+      position: absolute;
+      left: 0;
+    }
+
+    /* ========================================================
+       PHẦN 3 – CSS LINK
+    ======================================================== */
+
+    /* Trạng thái cơ bản */
+    .link-states a { display: block; margin-bottom: 6px; font-size: 0.95rem; }
+
+    .link-default                 { color: #1a0dab; }
+    .link-default:visited         { color: #609; }
+    .link-default:hover           { color: #d50000; text-decoration: underline; }
+    .link-default:active          { color: #ff6d00; }
+
+    /* Link không gạch chân */
+    .link-no-underline            { text-decoration: none; color: #1565c0; }
+    .link-no-underline:hover      { text-decoration: underline; }
+
+    /* Link kiểu nút */
+    .btn-link {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #1a237e;
+      color: #fff !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.25s, transform 0.15s;
+    }
+
+    .btn-link:hover {
+      background: #42a5f5;
+      transform: translateY(-2px);
+    }
+
+    .btn-link:active {
+      transform: translateY(0);
+    }
+
+    /* Link kiểu nút viền (outline) */
+    .btn-outline {
+      display: inline-block;
+      padding: 8px 20px;
+      border: 2px solid #1a237e;
+      color: #1a237e !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.25s;
+    }
+
+    .btn-outline:hover {
+      background: #1a237e;
+      color: #fff !important;
+    }
+
+    /* Link có icon mũi tên */
+    .link-arrow {
+      text-decoration: none;
+      color: #1565c0;
+      font-weight: 600;
+    }
+
+    .link-arrow::after {
+      content: " →";
+      transition: margin-left 0.2s;
+    }
+
+    .link-arrow:hover::after {
+      margin-left: 6px;
+    }
+
+    /* Link đổi màu nền khi hover */
+    .link-highlight {
+      text-decoration: none;
+      color: #333;
+      background: linear-gradient(to right, #bbdefb 0%, #bbdefb 100%);
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.3s ease, color 0.3s;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .link-highlight:hover {
+      background-size: 100% 100%;
+      color: #0d47a1;
+    }
+
+    /* Link breadcrumb */
+    .breadcrumb {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb li + li::before {
+      content: "/";
+      color: #999;
+      margin-right: 4px;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+      color: #1565c0;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .breadcrumb li:last-child {
+      color: #555;
+      font-weight: 600;
+    }
+
+    /* Phân cách các demo nhỏ */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .demo-grid .demo-box {
+      margin-top: 0;
+    }
+
+    .demo-label {
+      font-size: 0.75rem;
+      color: #888;
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Thực hành CSS – Table, List &amp; Link</h1>
+  <p>Bài tập minh hoạ các kỹ thuật tạo kiểu cho bảng, danh sách và liên kết</p>
+</header>
+
+<nav>
+  <a href="#section-table">Table</a>
+  <a href="#section-list">List</a>
+  <a href="#section-link">Link</a>
+</nav>
+
+<main>
+
+  <!-- ================================================
+       PHẦN 1 – CSS TABLE
+  ================================================ -->
+  <section id="section-table">
+    <h2>1. CSS Table</h2>
+
+    <h3>1.1 Bảng cơ bản (border-collapse)</h3>
+    <div class="demo-box">
+      <table class="table-basic">
+        <thead>
+          <tr>
+            <th>MSSV</th>
+            <th>Họ và Tên</th>
+            <th>Môn học</th>
+            <th>Điểm</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SV001</td><td>Nguyễn Văn An</td><td>Lập trình Web</td><td>8.5</td></tr>
+          <tr><td>SV002</td><td>Trần Thị Bình</td><td>Lập trình Web</td><td>7.0</td></tr>
+          <tr><td>SV003</td><td>Lê Minh Cường</td><td>Lập trình Web</td><td>9.0</td></tr>
+          <tr><td>SV004</td><td>Phạm Thị Dung</td><td>Lập trình Web</td><td>5.5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>1.2 Bảng sọc + hiệu ứng hover (nth-child)</h3>
+    <div class="demo-box">
+      <table class="table-zebra">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Giá (VNĐ)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Laptop Dell XPS</td><td>Máy tính</td><td>25.000.000</td></tr>
+          <tr><td>2</td><td>iPhone 15 Pro</td><td>Điện thoại</td><td>30.000.000</td></tr>
+          <tr><td>3</td><td>Tai nghe Sony</td><td>Phụ kiện</td><td>3.500.000</td></tr>
+          <tr><td>4</td><td>Bàn phím cơ</td><td>Phụ kiện</td><td>1.200.000</td></tr>
+          <tr><td>5</td><td>Màn hình LG 27"</td><td>Màn hình</td><td>8.000.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>1.3 Bảng "clean" + badge trạng thái</h3>
+    <div class="demo-box">
+      <table class="table-clean">
+        <thead>
+          <tr>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nguyễn Văn An</td>
+            <td>an.nv@example.com</td>
+            <td>Sinh viên</td>
+            <td><span class="badge badge-pass">Đạt</span></td>
+          </tr>
+          <tr>
+            <td>Trần Thị Bình</td>
+            <td>binh.tt@example.com</td>
+            <td>Sinh viên</td>
+            <td><span class="badge badge-pend">Chờ KT</span></td>
+          </tr>
+          <tr>
+            <td>Lê Minh Cường</td>
+            <td>cuong.lm@example.com</td>
+            <td>Cộng tác viên</td>
+            <td><span class="badge badge-pass">Đạt</span></td>
+          </tr>
+          <tr>
+            <td>Phạm Thị Dung</td>
+            <td>dung.pt@example.com</td>
+            <td>Sinh viên</td>
+            <td><span class="badge badge-fail">Không đạt</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================================================
+       PHẦN 2 – CSS LIST
+  ================================================ -->
+  <section id="section-list">
+    <h2>2. CSS List</h2>
+
+    <h3>2.1 Unordered List – list-style-type</h3>
+    <div class="demo-grid">
+      <div class="demo-box">
+        <p class="demo-label">disc (mặc định)</p>
+        <ul class="list-disc">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>TypeScript</li>
+        </ul>
+      </div>
+      <div class="demo-box">
+        <p class="demo-label">circle</p>
+        <ul class="list-circle">
+          <li>React</li>
+          <li>Vue</li>
+          <li>Angular</li>
+          <li>Svelte</li>
+        </ul>
+      </div>
+      <div class="demo-box">
+        <p class="demo-label">square</p>
+        <ul class="list-square">
+          <li>Node.js</li>
+          <li>Express</li>
+          <li>Fastify</li>
+          <li>Koa</li>
+        </ul>
+      </div>
+      <div class="demo-box">
+        <p class="demo-label">none (dùng cho menu)</p>
+        <ul class="list-none">
+          <li>Trang chủ</li>
+          <li>Giới thiệu</li>
+          <li>Dịch vụ</li>
+          <li>Liên hệ</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>2.2 Ordered List – list-style-type</h3>
+    <div class="demo-grid">
+      <div class="demo-box">
+        <p class="demo-label">decimal (mặc định)</p>
+        <ol class="list-decimal">
+          <li>Bước 1: Cài đặt</li>
+          <li>Bước 2: Cấu hình</li>
+          <li>Bước 3: Chạy thử</li>
+          <li>Bước 4: Triển khai</li>
+        </ol>
+      </div>
+      <div class="demo-box">
+        <p class="demo-label">lower-alpha (a, b, c...)</p>
+        <ol class="list-lower-alpha">
+          <li>Phương án A</li>
+          <li>Phương án B</li>
+          <li>Phương án C</li>
+          <li>Phương án D</li>
+        </ol>
+      </div>
+      <div class="demo-box">
+        <p class="demo-label">upper-roman (I, II, III...)</p>
+        <ol class="list-upper-roman">
+          <li>Chương I</li>
+          <li>Chương II</li>
+          <li>Chương III</li>
+          <li>Chương IV</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>2.3 Custom bullet dùng ::before</h3>
+    <div class="demo-box">
+      <p class="demo-label">Dấu ✔ màu xanh qua pseudo-element ::before</p>
+      <ul class="list-custom">
+        <li>Hiểu cú pháp HTML5 cơ bản</li>
+        <li>Nắm vững CSS Selector và Box Model</li>
+        <li>Biết cách dùng Flexbox và Grid</li>
+        <li>Thực hành tạo trang web responsive</li>
+        <li>Sử dụng được JavaScript DOM</li>
+      </ul>
+    </div>
+
+    <h3>2.4 Menu ngang (inline list)</h3>
+    <div class="demo-box">
+      <p class="demo-label">list-style: none + display: flex</p>
+      <ul class="list-inline">
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Khoá học</a></li>
+        <li><a href="#">Bài tập</a></li>
+        <li><a href="#">Tài liệu</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <h3>2.5 Danh sách emoji bullet</h3>
+    <div class="demo-box">
+      <p class="demo-label">list-style: none + ::before với emoji</p>
+      <ul class="list-image">
+        <li>Thiết kế giao diện người dùng</li>
+        <li>Phát triển ứng dụng di động</li>
+        <li>Xây dựng API RESTful</li>
+        <li>Quản trị cơ sở dữ liệu</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================================================
+       PHẦN 3 – CSS LINK
+  ================================================ -->
+  <section id="section-link">
+    <h2>3. CSS Link</h2>
+
+    <h3>3.1 Các trạng thái cơ bản (a:link / :visited / :hover / :active)</h3>
+    <div class="demo-box demo-label" style="font-style:normal; font-size:0.92rem; color:#333;">
+      <p style="margin-bottom:10px; color:#888; font-style:italic; font-size:0.8rem;">
+        Thứ tự đúng khi khai báo: <code>:link → :visited → :hover → :active</code> (LoVe-HAte)
+      </p>
+      <div class="link-states">
+        <a href="#" class="link-default">Link mặc định (xanh dương)</a>
+        <a href="#" class="link-no-underline">Link không gạch chân, gạch khi hover</a>
+      </div>
+    </div>
+
+    <h3>3.2 Link kiểu nút (button-like)</h3>
+    <div class="demo-box" style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+      <a href="#" class="btn-link">Nút solid</a>
+      <a href="#" class="btn-outline">Nút outline</a>
+    </div>
+
+    <h3>3.3 Link với animation mũi tên (::after)</h3>
+    <div class="demo-box">
+      <a href="#" class="link-arrow">Xem thêm bài viết</a>
+      &nbsp;&nbsp;
+      <a href="#" class="link-arrow">Đọc tài liệu</a>
+    </div>
+
+    <h3>3.4 Link highlight khi hover (background-size animation)</h3>
+    <div class="demo-box" style="font-size:1rem; line-height:2;">
+      Truy cập
+      <a href="#" class="link-highlight">tài liệu chính thức của MDN</a>
+      để tìm hiểu thêm về
+      <a href="#" class="link-highlight">CSS Selectors</a>
+      và
+      <a href="#" class="link-highlight">CSS Properties</a>.
+    </div>
+
+    <h3>3.5 Breadcrumb Navigation</h3>
+    <div class="demo-box">
+      <p class="demo-label">Dùng ol + li::before để tạo dấu phân cách "/"</p>
+      <ol class="breadcrumb">
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Khoá học</a></li>
+        <li><a href="#">Lập trình Web</a></li>
+        <li>Bài 5 – CSS Nâng cao</li>
+      </ol>
+    </div>
+
+    <h3>3.6 Bảng tổng hợp thuộc tính Link</h3>
+    <div class="demo-box" style="overflow-x:auto;">
+      <table class="table-clean">
+        <thead>
+          <tr>
+            <th>Pseudo-class / Thuộc tính</th>
+            <th>Ý nghĩa</th>
+            <th>Ví dụ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>a:link</code></td><td>Link chưa được truy cập</td><td><code>color: blue;</code></td></tr>
+          <tr><td><code>a:visited</code></td><td>Link đã được truy cập</td><td><code>color: purple;</code></td></tr>
+          <tr><td><code>a:hover</code></td><td>Con trỏ đang đè lên link</td><td><code>color: red;</code></td></tr>
+          <tr><td><code>a:active</code></td><td>Link đang được nhấn</td><td><code>color: orange;</code></td></tr>
+          <tr><td><code>text-decoration</code></td><td>Kiểu trang trí chữ</td><td><code>none / underline</code></td></tr>
+          <tr><td><code>cursor</code></td><td>Kiểu con trỏ chuột</td><td><code>pointer / default</code></td></tr>
+          <tr><td><code>display: block</code></td><td>Biến link thành block</td><td>Dùng cho menu, nút</td></tr>
+          <tr><td><code>transition</code></td><td>Hiệu ứng chuyển đổi mượt</td><td><code>all 0.3s ease</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Thực hành CSS – Table · List · Link &nbsp;|&nbsp; Môn Công nghệ Web</p>
+</footer>
+
+</body>
+</html>
